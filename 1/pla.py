@@ -3,9 +3,6 @@ import numpy as np
 def f(x,y):
     temp = x*0.6-y*0.2+0.3>0 
     return temp
-    # if temp > 0:
-        # return -1
-    # return 1
 
 class pla2d:
     def __init__(self, x1=0., x2=0., y1=0., y2=0.):
