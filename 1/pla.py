@@ -1,14 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def get_random_point():
     return np.random.rand(2)*2-1
 
-def boolToInt(boolInput):
-    if boolInput:
+
+def bool_to_int(bool_inp):
+    if bool_inp:
         return 1
     else:
         return -1
+
 
 def get_perp(p1, p2): 
     return np.array([ 
@@ -92,7 +95,7 @@ class Pla2dRunner:
         return class_value == self._supervisor.classify(point)
 
     def _update(self, point):
-        y = boolToInt(self._supervisor.classify(point))
+        y = bool_to_int(self._supervisor.classify(point))
         enhanced_point = np.hstack(([1.], point))
         temp_val = y * enhanced_point
         self._w = np.add(self._w, temp_val)
@@ -105,6 +108,14 @@ class Pla2dRunner:
 
         self._update(invalid_point)
         return False, self._step
+
+    def get_prob(self, data_size=1000):
+        prob_data = Data(data_size)
+        miss_count = 0
+        for point in prob_data:
+            if not self._validate(point):
+                miss_count += 1
+        return miss_count / float(data_size)
 
     def plot(self):
         c_pos, c_neg = self._supervisor.group(self._data)
@@ -135,7 +146,7 @@ if __name__ == "__main__":
     for i in xrange(1000):
         done, step = alg.run_iteration()
         if step % step_refresher == 0 or done:
-            print 'step: ', step
+            print 'step: ', step, " prob: ", alg.get_prob(1000)*100, "%"
             alg.plot()
 
         if done:
