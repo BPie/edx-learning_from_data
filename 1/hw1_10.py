@@ -19,7 +19,9 @@ def main():
     print "================================="
     print "results: "
     print "================================="
-    print "average miss prob: ", prob_sum/float(runs), " % (", prob_sum/float(runs)/100., ")"
+    print "average miss prob: ", \
+        prob_sum/float(runs), " % (", \
+        prob_sum/float(runs)/100., ")"
 
 
 if __name__ == "__main__":

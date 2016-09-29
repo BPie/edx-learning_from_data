@@ -13,9 +13,9 @@ def bool_to_int(bool_inp):
         return -1
 
 
-def get_perp(p1, p2): 
-    return np.array([ 
-        p2[1] - p1[1], 
+def get_perp(p1, p2):
+    return np.array([
+        p2[1] - p1[1],
         p1[0] - p2[0]])
 
 
@@ -38,7 +38,7 @@ class TargetFunction:
             else:
                 class_negative.append(point)
         return class_positive, class_negative
-        
+
 
 class Data:
     def __init__(self, n=10):
@@ -86,7 +86,7 @@ class Pla2dRunner:
         else:
             random_iter = np.random.random_integers(0, len(invalid_points)-1)
             return invalid_points[random_iter]
-        
+
     def _validate(self, point):
         enhanced_point = np.hstack(([1.], point))
         temp_val = self._w * enhanced_point
@@ -153,7 +153,3 @@ if __name__ == "__main__":
             print 'done in ', step, ' steps'
             raw_input("press any key to quit")
             break
-
-
-
-
