@@ -21,11 +21,25 @@ def compute_a_dash(n=1000):
         temp_a = get_a(x, y)
         sum_a += temp_a
         assert(temp_a/np.pi <= 1.0)
-        assert(temp_a>0)
+        assert(temp_a > 0)
     return sum_a / float(n)
 
 
-def v_compute_bias(n=1000000, a=compute_a_dash()):
+def compute_var(a_dash, n=100000):
+    vec_diff_a = []
+    for n in xrange(n):
+        x, y = get_sample()
+        temp_a = get_a(x, y)
+        assert(temp_a/np.pi <= 1.0)
+        assert(temp_a > 0)
+        diff = temp_a*x - a_dash*x
+        e_d_diff_sq = (diff**2).mean()
+        vec_diff_a.append(e_d_diff_sq)
+    vec_diff_a = np.array(vec_diff_a)
+    return vec_diff_a.mean()
+
+
+def v_compute_bias(a=compute_a_dash(), n=1000000):
     x = np.random.rand(n)*2-1
     y = np.sin(np.pi*x)
     g = x*a
@@ -74,6 +88,7 @@ if __name__ == "__main__":
     a = compute_a_dash(100000)
     print "a = ", a
 
-    bias = v_compute_bias(a=a)
+    bias = v_compute_bias(a)
     print "bias = ", bias
-    pass
+
+    print "var = ", compute_var(a)
